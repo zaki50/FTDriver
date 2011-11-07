@@ -33,16 +33,12 @@ public class FTDriver {
     @SuppressWarnings("unused")
     private static final int FTDI_RESET_REQUEST = 0;
 
-    @SuppressWarnings("unused")
     private static final int FTDI_RESET_REQUEST_TYPE = 0x40;
 
-    @SuppressWarnings("unused")
     private static final int FTDI_RESET_SIO = 0;
 
-    @SuppressWarnings("unused")
     private static final int FTDI_RESET_PURGE_RX = 1;
 
-    @SuppressWarnings("unused")
     private static final int FTDI_RESET_PURGE_TX = 2;
 
     private static final String TAG = "FTDriver";
@@ -142,12 +138,12 @@ public class FTDriver {
 
     // Initial control transfer
     private void initFTDIChip(UsbDeviceConnection conn, int baudrate) {
-        conn.controlTransfer(0x40, 0, 0, 0, null, 0, 0); //reset
-        conn.controlTransfer(0x40, 0, 1, 0, null, 0, 0); //clear Rx
-        conn.controlTransfer(0x40, 0, 2, 0, null, 0, 0); //clear Tx
-        conn.controlTransfer(0x40, 0x02, 0x0000, 0, null, 0, 0); //flow control none
-        conn.controlTransfer(0x40, 0x03, 0x4138, 0, null, 0, 0); //baudrate 9600
-        conn.controlTransfer(0x40, 0x04, 0x0008, 0, null, 0, 0); //data bit 8, parity none, stop bit 1, tx off
+        conn.controlTransfer(FTDI_RESET_REQUEST_TYPE, 0, FTDI_RESET_SIO, 0, null, 0, 0); //reset
+        conn.controlTransfer(FTDI_RESET_REQUEST_TYPE, 0, FTDI_RESET_PURGE_RX, 0, null, 0, 0); //clear Rx
+        conn.controlTransfer(FTDI_RESET_REQUEST_TYPE, 0, FTDI_RESET_PURGE_TX, 0, null, 0, 0); //clear Tx
+        conn.controlTransfer(FTDI_RESET_REQUEST_TYPE, 0x02, 0x0000, 0, null, 0, 0); //flow control none
+        conn.controlTransfer(FTDI_RESET_REQUEST_TYPE, 0x03, 0x4138, 0, null, 0, 0); //baudrate 9600
+        conn.controlTransfer(FTDI_RESET_REQUEST_TYPE, 0x04, 0x0008, 0, null, 0, 0); //data bit 8, parity none, stop bit 1, tx off
     }
 
     private boolean setFTDIEndpoints(UsbInterface intf) {

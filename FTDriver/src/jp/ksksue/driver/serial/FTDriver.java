@@ -89,25 +89,24 @@ public class FTDriver {
 
     // Read Binary Data
     public int read(byte[] buf) {
-        int i, len;
         byte[] rbuf = new byte[64];
 
         if (buf.length > 64) {
             return -1;
         }
 
-        len = mDeviceConnection.bulkTransfer(mFtdiEndpointIn, rbuf, 64, 0); // RX
+        // RX
+        final int len = mDeviceConnection.bulkTransfer(mFtdiEndpointIn, rbuf, 64, 0);
 
-        // FIXME rbuf's pointer shift 2 to 0. (I don't know how to do.) 
-        for (i = 0; i < len; ++i) {
-            buf[i] = rbuf[i + 2];
-        }
+        // FIXME zaki: buf.length が len より短い場合があるので修正する
+        System.arraycopy(rbuf, 2, buf, 0, len);
         return (len - 2);
     }
 
     // Write 1byte Binary Data
     public int write(byte[] buf) {
-        return mDeviceConnection.bulkTransfer(mFtdiEndpointOut, buf, 1, 0); // TX    	
+        // TX
+        return mDeviceConnection.bulkTransfer(mFtdiEndpointOut, buf, 1, 0);
     }
 
     // Write n byte Binary Data
@@ -115,7 +114,8 @@ public class FTDriver {
         if (length > 64) {
             return -1;
         }
-        return mDeviceConnection.bulkTransfer(mFtdiEndpointOut, buf, length, 0); // TX    	
+        // TX
+        return mDeviceConnection.bulkTransfer(mFtdiEndpointOut, buf, length, 0);
     }
 
     // TODO Implement these methods

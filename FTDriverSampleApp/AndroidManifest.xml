@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="jp.ksksue.serial"
+    package="jp.ksksue.sample"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -25,7 +25,6 @@
 
             <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
                 android:resource="@xml/device_filter" />
-
         </activity>
     </application>
 
